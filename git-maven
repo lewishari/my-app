@@ -1,0 +1,15 @@
+properties([parameters([choice(choices: 'master\ndev', description: 'Select branch where you want to build', name: 'Branch')])])
+
+node{
+    def name = "vikas"
+    def  mvnHome = tool name: 'Maven_home', type: 'maven'
+    echo "welcome to ${name}"
+    node{
+        stage('SCM Checkout'){
+        git url: 'https://github.com/vikas99341/my-app' , branch: "${params.Branch}"
+    }
+        stage('Maven Step'){
+        sh "${mvnHome}/bin/mvn package "
+    }
+   }
+}
